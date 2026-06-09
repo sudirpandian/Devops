@@ -6,3 +6,4 @@ hostname
 
 test trigger
 final test
+trigger fix
