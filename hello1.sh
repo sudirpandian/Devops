@@ -5,3 +5,4 @@ date
 hostname
 
 test trigger
+final test
