@@ -3,17 +3,26 @@ version: 0.2
 phases:
   pre_build:
     commands:
-      - echo Logging into ECR...
+      - echo Logging in to Amazon ECR...
       - aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 645437362580.dkr.ecr.ap-south-1.amazonaws.com
-      - aws eks update-kubeconfig --name brain-eks --region ap-south-1
 
   build:
     commands:
-      - docker build -t brain-task-app ./app
-      - docker tag brain-task-app:latest 645437362580.dkr.ecr.ap-south-1.amazonaws.com/brain-task-app:latest
-      - docker push 645437362580.dkr.ecr.ap-south-1.amazonaws.com/brain-task-app:latest
-      - kubectl apply -f k8s/
+      - echo Setting image tag...
+      - IMAGE_TAG=${CODEBUILD_RESOLVED_SOURCE_VERSION:-latest}
 
-artifacts:
-  files:
-    - '**/*'
+      - echo Building Docker image...
+      - docker build -t brain-task-app:$IMAGE_TAG ./app
+
+      - echo Tagging image...
+      - docker tag brain-task-app:$IMAGE_TAG 645437362580.dkr.ecr.ap-south-1.amazonaws.com/brain-task-app:$IMAGE_TAG
+
+      - echo Pushing image...
+      - docker push 645437362580.dkr.ecr.ap-south-1.amazonaws.com/brain-task-app:$IMAGE_TAG
+
+      - echo Deploying to EKS...
+      - kubectl set image deployment/brain-task-app brain-task-app=645437362580.dkr.ecr.ap-south-1.amazonaws.com/brain-task-app:$IMAGE_TAG
+
+  post_build:
+    commands:
+      - echo Build completed'

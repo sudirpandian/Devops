@@ -1,0 +1,21 @@
+{
+  "name": "brain-task-build",
+  "serviceRole": "arn:aws:iam::645437362580:role/CodeBuildBrainRole",
+  "artifacts": {
+    "type": "S3",
+    "location": "brain-eks-artifacts-645437362580"
+  },
+  "environment": {
+    "type": "LINUX_CONTAINER",
+    "image": "aws/codebuild/standard:7.0",
+    "computeType": "BUILD_GENERAL1_MEDIUM",
+    "privilegedMode": true
+  },
+  "source": {
+    "type": "GITHUB",
+    "location": "https://github.com/sudirpandian/Devops.git",
+    "gitCloneDepth": 1,
+    "buildspec": "buildspec.yml"
+  },
+  "timeoutInMinutes": 30
+}
