@@ -1,0 +1,19 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - echo Logging into ECR...
+      - aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 645437362580.dkr.ecr.ap-south-1.amazonaws.com
+      - aws eks update-kubeconfig --name brain-eks --region ap-south-1
+
+  build:
+    commands:
+      - docker build -t brain-task-app ./app
+      - docker tag brain-task-app:latest 645437362580.dkr.ecr.ap-south-1.amazonaws.com/brain-task-app:latest
+      - docker push 645437362580.dkr.ecr.ap-south-1.amazonaws.com/brain-task-app:latest
+      - kubectl apply -f k8s/
+
+artifacts:
+  files:
+    - '**/*'
