@@ -7,6 +7,7 @@ pipeline {
         IMAGE_TAG      = "v${BUILD_NUMBER}"
         EKS_CLUSTER    = 'trend-eks'
         AWS_REGION     = 'ap-south-1'
+        KUBECONFIG     = '/var/lib/jenkins/.kube/config'
     }
 
     stages {
