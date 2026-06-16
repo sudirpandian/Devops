@@ -1,0 +1,40 @@
+# Git
+.git
+.gitignore
+
+# Docker files (not needed inside image)
+.dockerignore
+docker-compose.yml
+docker-compose.override.yml
+
+# Scripts
+build.sh
+deploy.sh
+
+# CI/CD
+Jenkinsfile
+.jenkins/
+
+# Monitoring
+monitoring/
+
+# Docs & misc
+*.md
+README*
+LICENSE
+screenshots/
+
+# Node (not needed — we only copy build/)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Env files
+.env
+.env.*
+.last_build_image
+
+# OS
+.DS_Store
+Thumbs.db

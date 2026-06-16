@@ -1,0 +1,34 @@
+version: '3.8'
+
+# =============================================================
+# Monitoring Stack: Uptime Kuma
+# Open-source, self-hosted monitoring with alerting
+# Access at http://YOUR-SERVER-IP:3001
+# =============================================================
+
+services:
+  uptime-kuma:
+    image: louislam/uptime-kuma:1
+    container_name: uptime-kuma
+    restart: unless-stopped
+    ports:
+      - "3001:3001"
+    volumes:
+      - uptime-kuma-data:/app/data
+    environment:
+      - UPTIME_KUMA_PORT=3001
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://localhost:3001"]
+      interval: 60s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "2"
+
+volumes:
+  uptime-kuma-data:
+    name: uptime-kuma-data
