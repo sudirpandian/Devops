@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-# Devops
-Tasks
-=======
 # DevOps Build — React App Deployment
 
 A production-ready containerized React app deployed via Docker, Jenkins CI/CD, and AWS EC2.
@@ -176,5 +172,3 @@ Merge dev → master
 - **Deployed Site**: `http://YOUR-EC2-IP/`
 - **Dev Docker Image**: `YOUR_USERNAME/dev:latest`
 - **Prod Docker Image**: `YOUR_USERNAME/prod:latest` (private)
->>>>>>> 5422bec (production deployment setup)
-# test
